@@ -1,7 +1,18 @@
-httpx
+# FastAPI and ASGI server
 fastapi
-uvicorn
+uvicorn[standard]
+
+# Testing
 pytest
-requests
-jinja2
-python-dotenv
+httpx
+pytest-asyncio
+
+# Linting and formatting
+flake8
+black
+
+# Security scanning
+bandit
+
+# Secret scanning
+detect-secrets
