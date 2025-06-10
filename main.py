@@ -154,7 +154,7 @@ async def stop_cpu_stress():
             status_code=403, detail="CPU stress test feature is disabled"
         )
 
-    global stop_flag, cpu_stress_processes  # רק אלה משתנים בפועל
+    global cpu_stress_processes
 
     if stop_flag is not None:
         stop_flag.value = True
