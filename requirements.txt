@@ -1,18 +1,24 @@
-# FastAPI and ASGI server
+# 🚀 FastAPI Core
 fastapi
 uvicorn[standard]
 
-# Testing
-pytest
-httpx
-pytest-asyncio
+# 📄 Templates (Jinja2)
+jinja2
 
-# Linting and formatting
+# 🧪 Testing
+pytest
+pytest-asyncio
+httpx
+
+# 🧼 Code Style & Formatting
 flake8
 black
 
-# Security scanning
+# 🔐 Security Scanning
 bandit
 
-# Secret scanning
+# 🔑 Secrets Scanning
 detect-secrets
+
+# 🛡️ Dependency Vulnerability Scanning
+pip-audit
