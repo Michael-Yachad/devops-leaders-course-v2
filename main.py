@@ -160,12 +160,13 @@ async def stop_cpu_stress():
         stop_flag.value = True
     for p in cpu_stress_processes:
         p.join(timeout=1)
-    
+
     # כאן אתה משנה ערך בתוך dict – לא נדרש global
     cpu_stress_status_data["running"] = False
 
     cpu_stress_processes = []
     return JSONResponse(content={"message": "CPU stress test stopped"})
+
 
 @app.get("/stress_status", response_class=JSONResponse)
 async def stress_status():
@@ -198,7 +199,6 @@ async def stress_status():
             "iterations": iterations,
         }
     )
-
 
 
 if __name__ == "__main__":
