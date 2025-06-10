@@ -1,0 +1,30 @@
+name: CI Pipeline (with scripts)
+
+on:
+  push:
+    branches:
+      - '**'  # רץ על כל פוש לכל ענף
+
+jobs:
+  run-scripts:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 🛎️ Checkout repository
+        uses: actions/checkout@v4
+
+      - name: 🐍 Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: 🧾 Make scripts executable
+        run: |
+          chmod +x setup_and_run.sh
+          chmod +x run_checks.sh
+
+      - name: 🏗️ Set up and install app
+        run: ./setup_and_run.sh
+
+      - name: ✅ Run code checks
+        run: ./run_checks.sh
