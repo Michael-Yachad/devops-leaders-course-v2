@@ -147,7 +147,6 @@ async def start_cpu_stress(duration: int = 10, load: int = 100):
 async def stop_cpu_stress():
     """
     Stops the ongoing CPU stress test.
-
     This endpoint is protected by the STRESS_TEST_FLAG feature flag.
     """
     if os.environ.get("STRESS_TEST_FLAG", "").lower() != "true":
@@ -155,15 +154,18 @@ async def stop_cpu_stress():
             status_code=403, detail="CPU stress test feature is disabled"
         )
 
-    global stop_flag, cpu_stress_status_data, cpu_stress_processes
+    global stop_flag, cpu_stress_processes  # רק אלה משתנים בפועל
+
     if stop_flag is not None:
         stop_flag.value = True
     for p in cpu_stress_processes:
         p.join(timeout=1)
+    
+    # כאן אתה משנה ערך בתוך dict – לא נדרש global
     cpu_stress_status_data["running"] = False
+
     cpu_stress_processes = []
     return JSONResponse(content={"message": "CPU stress test stopped"})
-
 
 @app.get("/stress_status", response_class=JSONResponse)
 async def stress_status():
@@ -177,15 +179,18 @@ async def stress_status():
             status_code=403, detail="CPU stress test feature is disabled"
         )
 
-    global cpu_stress_status_data, global_iterations
     now = time.time()
+
     if cpu_stress_status_data.get("running", False):
         remaining = max(0, cpu_stress_status_data["end_time"] - now)
     else:
         remaining = 0
+
     iterations = global_iterations.value if global_iterations is not None else 0
+
     if now >= cpu_stress_status_data.get("end_time", 0):
         cpu_stress_status_data["running"] = False
+
     return JSONResponse(
         content={
             "running": cpu_stress_status_data.get("running", False),
@@ -193,6 +198,7 @@ async def stress_status():
             "iterations": iterations,
         }
     )
+
 
 
 if __name__ == "__main__":
