@@ -38,6 +38,6 @@ jobs:
 
     - name: Build and Push Docker Image
       run: |
-        IMAGE_NAME=ghcr.io/${{ github.repository }}:latest
+        IMAGE_NAME=ghcr.io/michael-yachad/devops-leaders-course-v2:latest
         docker build -t $IMAGE_NAME .
         docker push $IMAGE_NAME
